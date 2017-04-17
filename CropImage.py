@@ -13,7 +13,12 @@ def cropImage(img1, img2):
     # find the keypoints and descriptors with SIFT
     kp1, des1 = sift.detectAndCompute(img1, None)
     kp2, des2 = sift.detectAndCompute(img2, None)
-
+    '''img11 = np.zeros_like(img1)
+    img22 = np.zeros_like(img2)
+    img11 = cv2.drawKeypoints(img1,kp1, img11, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    img22 = cv2.drawKeypoints(img2,kp2, img22, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    cv2.imwrite('sift_keypoints1.jpg',img11)
+    cv2.imwrite('sift_keypoints2.jpg',img22)'''
     # FLANN parameters
     FLANN_INDEX_KDTREE = 1
     index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
@@ -55,20 +60,19 @@ def cropImage(img1, img2):
     #                    matchesMask=matchesMask,
     #                    flags=0)
     # img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, matches, None, **draw_params)
-    # cv2.imwrite('MatchedImage.png', img3)
     # cv2.imshow('sift', img3)
     # cv2.waitKey()
     return im_out
 
 
-# if __name__ == '__main__':
-#     # img1 = cv2.imread('box.png', 0)  # queryImage
-#     # img2 = cv2.imread('box_in_scene.png', 0)  # trainImage
+if __name__ == '__main__':
+    # img1 = cv2.imread('box.png', 0)  # queryImage
+    # img2 = cv2.imread('box_in_scene.png', 0)  # trainImage
 
-#     im = 'D:\\Hocus-Focus\\p2.png '
-#     im1, im2 = ImDiffMod.cropPhoto(im)
+    im = 'D:\\Hocus-Focus\\p2.png '
+    im1, im2 = ImDiffMod.cropPhoto(im)
 
-#     # im1 = cv2.imread('D:\\HocusFocusCropped\\1\\p1.jpg', cv2.IMREAD_GRAYSCALE)
-#     # im2 = cv2.imread('D:\\HocusFocusCropped\\1\\p2.jpg', cv2.IMREAD_GRAYSCALE)
+    # im1 = cv2.imread('D:\\HocusFocusCropped\\1\\p1.jpg', cv2.IMREAD_GRAYSCALE)
+    # im2 = cv2.imread('D:\\HocusFocusCropped\\1\\p2.jpg', cv2.IMREAD_GRAYSCALE)
 
-#     cropImage(im1, im2)
+    cropImage(im1, im2)
