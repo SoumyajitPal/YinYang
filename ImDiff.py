@@ -13,15 +13,13 @@ def imDiff(im1, im2):
     imGray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
     print(im1.shape, im2.shape)
     im = cv2.absdiff(imGray1, imGray2)
-    # cv2.imwrite('AbsDiff.png', im)
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))
     thresh = cv2.erode(im, kernel, iterations=3)
     thresh = cv2.erode(thresh, kernel, iterations=3)
     ret, thresh = cv2.threshold(im, 127,255, cv2.THRESH_BINARY)
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))
     # finalIm = thresh
-    thresh = cv2.dilate(thresh, kernel, iterations=3)
-    # cv2.imwrite('AfterErosionDilation.png', thresh)
+    thresh = cv2.dilate(thresh, kernel, iterations=2)
     # thresh = cv2.cvtColor(thresh, cv2.COLOR_BGR2GRAY)
     img2, contours,hierarchy = cv2.findContours(thresh.copy(),cv2.RETR_LIST,cv2.CHAIN_APPROX_TC89_KCOS )
     # finalIm = cv2.erode(finalIm, kernel=np.ones(shape=(3, 3), dtype=np.uint8))
@@ -57,33 +55,33 @@ def imDiff(im1, im2):
     # cv2.drawContours(finalIm, contours, -1, (0,255,0), 2)
     # cv2.imwrite('p441.png', im1)
     # cv2.imwrite('p442.png', im2)
-    # cv2.imshow('diff', thresh)
+    cv2.imshow('diff', thresh)
     # cv2.waitKey()
     # cv2.imwrite("difference.png", finalIm)
     return im1, im2
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-#     Folder = 'C:\\Users\\soumy\\Downloads\\HocusFocusSeg\\HocusFocusSeg\\'
+    Folder = 'C:\\Users\\soumy\\Downloads\\HocusFocusSeg\\HocusFocusSeg\\'
 
-#     import os
+    import os
 
-#     DownImages = []
-#     for f in os.listdir(Folder + 'down'):
-#         DownImages.append(Folder + 'down\\' + str(f))
+    DownImages = []
+    for f in os.listdir(Folder + 'down'):
+        DownImages.append(Folder + 'down\\' + str(f))
 
-#     UpImages = []
-#     for f in os.listdir(Folder + 'up'):
-#         UpImages.append(Folder + 'up\\' + str(f))
+    UpImages = []
+    for f in os.listdir(Folder + 'up'):
+        UpImages.append(Folder + 'up\\' + str(f))
 
-#     for u, d in zip(UpImages, DownImages):
-#         print(u, d)
-#         im1 = cv2.imread(u, cv2.IMREAD_GRAYSCALE)
-#         im2 = cv2.imread(d, cv2.IMREAD_GRAYSCALE)
+    for u, d in zip(UpImages, DownImages):
+        print(u, d)
+        im1 = cv2.imread(u, cv2.IMREAD_GRAYSCALE)
+        im2 = cv2.imread(d, cv2.IMREAD_GRAYSCALE)
 
-#         # dilated1 = cv2.dilate(im1, kernel=np.zeros(shape=(3, 3)), iterations=1)
-#         # dilated2 = cv2.dilate(im2, kernel=np.zeros(shape=(3, 3)), iterations=1)
+        # dilated1 = cv2.dilate(im1, kernel=np.zeros(shape=(3, 3)), iterations=1)
+        # dilated2 = cv2.dilate(im2, kernel=np.zeros(shape=(3, 3)), iterations=1)
 
-#         # imDiff(dilated1, dilated2)
-#         imOut = CropImage.cropImage(im1, im2)
-#         imDiff(im1, imOut)
+        # imDiff(dilated1, dilated2)
+        imOut = CropImage.cropImage(im1, im2)
+        imDiff(im1, imOut)
